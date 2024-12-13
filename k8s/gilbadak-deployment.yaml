@@ -1,0 +1,87 @@
+---
+# gilbadak-user
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gilbadak-user
+  labels:
+    app: gilbadak-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gilbadak-user
+  template:
+    metadata:
+      name: gilbadak-user
+      labels:
+        app: gilbadak-user
+    spec:
+      containers:
+        - name: gilbadak-user
+          image: ghosttrio/gilbadak-user:latest
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: gilbadak-configmap
+                  key: DATABASE_URL
+
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: gilbadak-configmap
+                  key: DATABASE_USERNAME
+
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: gilbadak-configmap
+                  key: DATABASE_PASSWORD
+      restartPolicy: Always
+---
+# gilbadak-busking
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gilbadak-busking
+  labels:
+    app: gilbadak-busking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gilbadak-busking
+  template:
+    metadata:
+      name: gilbadak-busking
+      labels:
+        app: gilbadak-busking
+    spec:
+      containers:
+        - name: gilbadak-busking
+          image: ghosttrio/gilbadak-busking:latest
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: gilbadak-configmap
+                  key: DATABASE_URL
+            - name: DATABASE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: gilbadak-configmap
+                  key: DATABASE_USERNAME
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: gilbadak-configmap
+                  key: DATABASE_PASSWORD
+      restartPolicy: Always
+

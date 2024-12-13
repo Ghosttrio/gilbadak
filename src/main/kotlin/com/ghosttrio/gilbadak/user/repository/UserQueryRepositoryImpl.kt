@@ -1,6 +1,6 @@
 package com.ghosttrio.gilbadak.user.repository
 
-import com.ghosttrio.gilbadak.entity.QUserEntity.userEntity
+import com.ghosttrio.gilbadak.user.entity.QUserEntity.userEntity
 import com.ghosttrio.gilbadak.user.entity.UserEntity
 import com.querydsl.jpa.impl.JPAQueryFactory
 

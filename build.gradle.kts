@@ -27,8 +27,14 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.projectlombok:lombok")
+
+	implementation("org.springframework.boot:spring-boot-starter-graphql")
+	testImplementation("org.springframework.graphql:spring-graphql-test")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+	testImplementation("org.springframework:spring-webflux")
 	runtimeOnly("org.postgresql:postgresql")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
@@ -73,8 +79,3 @@ tasks.named("clean") {
 		generated.deleteRecursively()
 	}
 }
-
-
-//kapt {
-//	generateStubs = true
-//}

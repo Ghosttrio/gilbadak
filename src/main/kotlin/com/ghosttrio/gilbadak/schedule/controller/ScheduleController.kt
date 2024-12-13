@@ -1,4 +1,4 @@
-package com.ghosttrio.gilbadak.user.controller
+package com.ghosttrio.gilbadak.schedule.controller
 
 import com.ghosttrio.gilbadak.user.controller.model.request.UserRequest
 import com.ghosttrio.gilbadak.user.entity.UserEntity
@@ -9,7 +9,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.stereotype.Controller
 
 @Controller
-class UserController(private val userService: UserService) {
+class ScheduleController(private val userService: UserService) {
 
     @QueryMapping
     fun loadAllUser(): List<UserEntity> {
@@ -28,7 +28,7 @@ class UserController(private val userService: UserService) {
     }
 
     @MutationMapping
-    fun updateNickname(@Argument id: Long, 
+    fun updateNickname(@Argument id: Long,
                        @Argument nickname: String): String {
         userService.updateNickname(id, nickname)
         return "성공"
