@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - ./gilbadak-local/postgresql/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: local
+      POSTGRES_PASSWORD: local
+      POSTGRES_DB: gilbadak-local
