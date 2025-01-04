@@ -9,16 +9,16 @@ import jakarta.persistence.GenerationType.IDENTITY
 class UserEntity(
     @Id @GeneratedValue(strategy = IDENTITY)
     val id: Long?,
-    val email: String,
-    var nickname: String,
+    @Embedded
+    var profile: Profile,
     @Enumerated(EnumType.STRING)
     var status: UserStatus
 ): BaseTimeEntity() {
 
 //    constructor() : this(null, "", "") JPA Gradle 플러그인으로 제거
-    constructor(email: String, nickname: String) : this(null, email, nickname, UserStatus.ACTIVATED)
+    constructor(profile: Profile) : this(null, profile, UserStatus.ACTIVATED)
 
-    fun updateNickname(nickname: String) {
-        this.nickname = nickname
+    fun changeNickname(nickname: String) {
+        profile.changeNickname(nickname)
     }
 }
