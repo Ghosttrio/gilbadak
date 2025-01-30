@@ -1,4 +1,4 @@
-package com.ghosttrio.gilbadak.user.entity
+package com.ghosttrio.gilbadak.user.domain
 
 import jakarta.persistence.Embeddable
 

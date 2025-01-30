@@ -1,6 +1,5 @@
-package com.ghosttrio.gilbadak.user.repository
+package com.ghosttrio.gilbadak.user.infrastructure
 
-import com.ghosttrio.gilbadak.user.entity.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface UserRepository: JpaRepository<UserEntity, Long>, UserQueryRepository {

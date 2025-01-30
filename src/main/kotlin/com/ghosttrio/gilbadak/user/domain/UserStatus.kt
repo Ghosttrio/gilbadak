@@ -1,4 +1,4 @@
-package com.ghosttrio.gilbadak.user.entity
+package com.ghosttrio.gilbadak.user.domain
 
 enum class UserStatus {
     ACTIVATED, DELETED

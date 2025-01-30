@@ -1,7 +1,7 @@
 //package com.ghosttrio.gilbadak.service
 //
-//import com.ghosttrio.gilbadak.user.entity.UserEntity
-//import com.ghosttrio.gilbadak.user.entity.UserStatus
+//import com.ghosttrio.gilbadak.user.infrastructure.UserEntity
+//import com.ghosttrio.gilbadak.user.domain.UserStatus
 //import com.ghosttrio.gilbadak.user.repository.UserRepository
 //import com.ghosttrio.gilbadak.user.service.UserService
 //import io.kotest.assertions.throwables.shouldThrow

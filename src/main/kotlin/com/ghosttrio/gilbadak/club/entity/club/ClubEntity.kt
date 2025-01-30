@@ -4,7 +4,6 @@ import com.ghosttrio.gilbadak.util.BaseTimeEntity
 import jakarta.persistence.*
 import jakarta.persistence.EnumType.STRING
 import jakarta.persistence.GenerationType.IDENTITY
-import java.time.LocalDateTime
 
 @Entity
 @Table(name = "tb_clubs")

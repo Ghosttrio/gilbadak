@@ -1,4 +1,4 @@
-package com.ghosttrio.gilbadak.user.api
+package com.ghosttrio.gilbadak.support
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester

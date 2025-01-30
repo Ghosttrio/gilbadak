@@ -1,7 +1,7 @@
 package com.ghosttrio.gilbadak.user.controller
 
 import com.ghosttrio.gilbadak.user.controller.model.request.UserRequest
-import com.ghosttrio.gilbadak.user.entity.UserEntity
+import com.ghosttrio.gilbadak.user.infrastructure.UserEntity
 import com.ghosttrio.gilbadak.user.service.UserService
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping

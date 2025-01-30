@@ -2,6 +2,7 @@ services:
   postgres:
     image: postgres
     restart: always
+    container_name: gilbadak-db
     volumes:
       - ./gilbadak-local/postgresql/data:/var/lib/postgresql/data
     ports:
