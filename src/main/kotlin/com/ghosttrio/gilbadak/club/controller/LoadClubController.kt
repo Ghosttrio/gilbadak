@@ -15,22 +15,6 @@ class LoadClubController(
     private val loadClubService: LoadClubService
 ) {
 
-    /**
-     * - 동아리 목록 조회
-     * - 동아리 상세 조회
-     * - 동아리 비밀 정보 조회
-     * - 동아리 가입 신청 조회
-     *
-     * - 동아리 가입 신청
-     * - 동아리 가입 승인
-     * - 동아리 생성
-     * - 동아리 회장 등록
-     * - 동아리 해체
-     * - 동아리 이름 변경
-     * - 동아리 정보 등록
-     * - 동아리 정보 변경
-     */
-
     @GetMapping
     fun loadAllClubs(): List<ClubDomain> {
         val result = loadClubService.loadAllClubs()
