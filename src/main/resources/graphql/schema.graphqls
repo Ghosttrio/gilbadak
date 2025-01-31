@@ -1,0 +1,27 @@
+type Query {
+    loadAllUser: [UserEntity]
+    loadUser(id: ID): UserEntity
+}
+
+type Mutation {
+    createUser(request: CreateUserRequest): String
+    updateNickname(id: ID, nickname: String): String
+    deleteUser(id: ID): String
+}
+
+type UserEntity {
+    id: ID
+    email: String
+    nickname: String
+    status: UserStatus
+}
+
+input CreateUserRequest {
+    email: String
+    password: String
+    nickname: String
+}
+
+enum UserStatus {
+    ACTIVATED, DEACTIVATED
+}
