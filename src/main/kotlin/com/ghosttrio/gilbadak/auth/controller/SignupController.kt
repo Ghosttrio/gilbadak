@@ -14,7 +14,7 @@ class SignupController(
 ) {
     @PostMapping("/signup")
     fun signup(@RequestBody request: SignupRequest): String {
-
+        authService.signup(request.convert())
         return "ok"
     }
 }
