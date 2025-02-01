@@ -3,13 +3,11 @@ package com.ghosttrio.gilbadak.club.controller
 import com.ghosttrio.gilbadak.club.entity.club.ClubDomain
 import com.ghosttrio.gilbadak.club.entity.club.ClubInformation
 import com.ghosttrio.gilbadak.club.entity.club.ClubJoinRequest
+import com.ghosttrio.gilbadak.club.entity.club.ClubType
 import com.ghosttrio.gilbadak.club.service.LoadClubService
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.justRun
 import io.mockk.mockk
-import org.mockito.Mockito
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -25,14 +23,15 @@ class LoadClubControllerTest : DescribeSpec({
 
     describe("동아리 조회 API 테스트") {
         it("모든 동아리 조회가 성공해야 한다") {
-            val clubList = listOf(ClubDomain())
+            val clubList = listOf(ClubDomain("", "", ClubType.ART, "", 1L))
             every { loadClubService.loadAllClubs() } returns clubList
             mockMvc.perform(get("/api/v1/clubs"))
                 .andExpect(status().isOk)
         }
 
         it("동아리 상세 정보 조회가 성공해야 한다") {
-            val club = ClubDomain()
+            val club = ClubDomain("", "", ClubType.ART, "", 1L)
+
             every { loadClubService.loadClub() } returns club
             mockMvc.perform(get("/api/v1/clubs/{clubId}", 1L))
                 .andExpect(status().isOk)

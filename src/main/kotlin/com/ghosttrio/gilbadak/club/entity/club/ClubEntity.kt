@@ -9,11 +9,11 @@ import jakarta.persistence.GenerationType.IDENTITY
 @Table(name = "tb_clubs")
 class ClubEntity(
     @Id @GeneratedValue(strategy = IDENTITY)
-    val id: Long,
-    var name: String,
-    var location: String,
+    val id: Long?,
+    val name: String,
+    val location: String,
     @Enumerated(STRING)
-    var type: ClubType,
-    var description: String
-): BaseTimeEntity() {
-}
+    val type: ClubType,
+    val description: String,
+    val presentUserId: Long
+): BaseTimeEntity()

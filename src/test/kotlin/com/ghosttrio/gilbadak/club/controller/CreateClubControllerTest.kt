@@ -3,6 +3,7 @@ package com.ghosttrio.gilbadak.club.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ghosttrio.gilbadak.club.controller.model.request.CreateClubJoinRequest
 import com.ghosttrio.gilbadak.club.controller.model.request.CreateClubRequest
+import com.ghosttrio.gilbadak.club.entity.club.ClubType
 import com.ghosttrio.gilbadak.club.service.CreateClubService
 import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.justRun
@@ -24,7 +25,7 @@ class CreateClubControllerTest : DescribeSpec({
 
     describe("동아리 생성 API 테스트") {
         it("동아리 생성 요청이 성공해야 한다") {
-            val request = CreateClubRequest("name", 1L, "location", "description")
+            val request = CreateClubRequest("name", 1L, "location", "description", ClubType.ART)
             justRun { createClubService.createClub(request.convert()) }
 
             mockMvc.perform(

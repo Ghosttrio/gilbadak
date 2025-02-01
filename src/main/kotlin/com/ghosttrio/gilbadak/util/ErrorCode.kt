@@ -7,5 +7,7 @@ enum class ErrorCode(
     val message: String
 ) {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 회원 정보를 찾을 수 없습니다."),
-    USER_NICKNAME_DUPLICATED(HttpStatus.BAD_REQUEST, "해당 닉네임이 이미 존재합니다.");
+    USER_NICKNAME_DUPLICATED(HttpStatus.BAD_REQUEST, "해당 닉네임이 이미 존재합니다."),
+    CLUB_PRESIDENT_DUPLICATED(HttpStatus.BAD_REQUEST, "유저는 하나의 동아리만 생성할 수 있습니다."),
+    CLUB_NAME_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 동아리 이름입니다.");
 }
