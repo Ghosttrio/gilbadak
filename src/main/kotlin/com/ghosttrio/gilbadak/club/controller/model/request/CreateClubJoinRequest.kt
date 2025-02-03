@@ -5,10 +5,9 @@ import com.ghosttrio.gilbadak.util.ServiceRequestConverter
 
 data class CreateClubJoinRequest(
     val userId: Long,
-    val clubId: Long,
-    val message: String
+    val clubId: Long
 ) : ServiceRequestConverter<CreateClubJoinServiceRequest> {
     override fun convert(): CreateClubJoinServiceRequest {
-        return CreateClubJoinServiceRequest(userId, clubId, message)
+        return CreateClubJoinServiceRequest(userId, clubId)
     }
 }

@@ -4,6 +4,8 @@ import com.ghosttrio.gilbadak.club.entity.club.ClubEntity
 import com.ghosttrio.gilbadak.club.entity.club.ClubType
 import com.ghosttrio.gilbadak.club.repository.ClubPersistenceAdapter
 import com.ghosttrio.gilbadak.club.repository.ClubRepository
+import com.ghosttrio.gilbadak.club.repository.ClubUserPersistenceAdapter
+import com.ghosttrio.gilbadak.club.repository.ClubUserRepository
 import com.ghosttrio.gilbadak.club.service.model.request.CreateClubServiceRequest
 import com.ghosttrio.gilbadak.user.domain.UserStatus
 import com.ghosttrio.gilbadak.user.infrastructure.UserEntity
@@ -18,9 +20,17 @@ import java.util.*
 class CreateClubServiceTest : DescribeSpec({
 
     val clubPersistenceAdapter = mockk<ClubPersistenceAdapter>()
+    val clubUserPersistenceAdapter = mockk<ClubUserPersistenceAdapter>()
     val clubRepository = mockk<ClubRepository>()
     val userRepository = mockk<UserRepository>()
-    val createClubService = CreateClubService(clubPersistenceAdapter, clubRepository, userRepository)
+    val clubUserRepository = mockk<ClubUserRepository>()
+    val createClubService = CreateClubService(
+        clubPersistenceAdapter,
+        clubUserPersistenceAdapter,
+        clubRepository,
+        userRepository,
+        clubUserRepository
+    )
 
     describe("동아리 생성 서비스 테스트") {
 
@@ -73,7 +83,11 @@ class CreateClubServiceTest : DescribeSpec({
                 createClubService.createClub(request)
             }.message shouldBe "중복된 동아리 이름입니다."
         }
+    }
 
+    describe("동아리 가입 신청 테스트") {
+        it("동아리 가입 신청이 성공해야 한다") {
 
+        }
     }
 })

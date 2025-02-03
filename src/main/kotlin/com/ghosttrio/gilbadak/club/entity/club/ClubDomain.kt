@@ -9,7 +9,13 @@ class ClubDomain(
     val presidentUserId: Long
 ) {
     companion object {
-        fun create(name: String, location: String, type: ClubType, description: String, presidentUserId: Long) : ClubDomain {
+        fun create(
+            name: String,
+            location: String,
+            type: ClubType,
+            description: String,
+            presidentUserId: Long
+        ): ClubDomain {
             return ClubDomain(name, location, type, description, presidentUserId)
         }
     }

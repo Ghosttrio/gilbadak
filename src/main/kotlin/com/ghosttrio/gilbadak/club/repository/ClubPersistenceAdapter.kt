@@ -16,4 +16,5 @@ class ClubPersistenceAdapter(
         val clubEntity = clubMapper.toEntity(clubDomain)
         clubRepository.save(clubEntity)
     }
+
 }

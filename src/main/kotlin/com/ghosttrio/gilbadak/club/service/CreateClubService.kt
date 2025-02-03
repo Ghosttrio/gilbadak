@@ -1,8 +1,11 @@
 package com.ghosttrio.gilbadak.club.service
 
 import com.ghosttrio.gilbadak.club.entity.club.ClubDomain
+import com.ghosttrio.gilbadak.club.entity.club.ClubUserDomain
 import com.ghosttrio.gilbadak.club.repository.ClubPersistenceAdapter
 import com.ghosttrio.gilbadak.club.repository.ClubRepository
+import com.ghosttrio.gilbadak.club.repository.ClubUserPersistenceAdapter
+import com.ghosttrio.gilbadak.club.repository.ClubUserRepository
 import com.ghosttrio.gilbadak.club.service.model.request.CreateClubJoinServiceRequest
 import com.ghosttrio.gilbadak.club.service.model.request.CreateClubServiceRequest
 import com.ghosttrio.gilbadak.user.infrastructure.UserRepository
@@ -16,12 +19,14 @@ import org.springframework.stereotype.Service
 @RequiredArgsConstructor
 class CreateClubService(
     private val clubPersistenceAdapter: ClubPersistenceAdapter,
+    private val clubUserPersistenceAdapter: ClubUserPersistenceAdapter,
     private val clubRepository: ClubRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val clubUserRepository: ClubUserRepository
 ) {
 
     fun createClub(request: CreateClubServiceRequest) {
-        validateExistPresidentUser(request.presidentUserId)
+        validateExistUser(request.presidentUserId)
         validateDuplicatePresidentUser(request.presidentUserId)
         validateDuplicateClubName(request.name)
 
@@ -35,7 +40,7 @@ class CreateClubService(
         clubPersistenceAdapter.save(clubDomain)
     }
 
-    private fun validateExistPresidentUser(userId: Long) {
+    private fun validateExistUser(userId: Long) {
         val isExist = userRepository.findById(userId).isEmpty
         if (!isExist) throw GilbadakException(USER_NOT_FOUND)
     }
@@ -50,12 +55,26 @@ class CreateClubService(
         if (isDuplicate) throw GilbadakException(CLUB_NAME_DUPLICATED)
     }
 
-
-
-
-
     @Transactional
     fun createClubJoinRequest(request: CreateClubJoinServiceRequest) {
+        validateAlreadyExistClubUser(request.userId, request.clubId)
+        validateRejectedUser(request.userId)
+        validateExistClub(request.clubId)
+        val clubUserDomain = ClubUserDomain.create(request.userId, request.clubId)
+        clubUserPersistenceAdapter.save(clubUserDomain)
+    }
 
+    private fun validateAlreadyExistClubUser(userId: Long, clubId: Long) {
+        clubUserPersistenceAdapter.findByUserIdAndClubId(userId, clubId)
+    }
+
+    private fun validateRejectedUser(userId: Long) {
+        val isRejected = clubUserRepository.findById(userId).isPresent
+        if (isRejected) throw GilbadakException(CLUB_REJECTED)
+    }
+
+    private fun validateExistClub(clubId: Long) {
+        val isExist = clubRepository.findById(clubId).isPresent
+        if (!isExist) throw GilbadakException(CLUB_NAME_DUPLICATED)
     }
 }

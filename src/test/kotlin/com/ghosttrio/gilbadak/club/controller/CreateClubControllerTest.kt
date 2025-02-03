@@ -37,7 +37,7 @@ class CreateClubControllerTest : DescribeSpec({
         }
 
         it("동아리 가입 요청이 성공해야 한다") {
-            val request = CreateClubJoinRequest(1L, 1L, "description")
+            val request = CreateClubJoinRequest(1L, 1L)
             justRun { createClubService.createClubJoinRequest(request.convert()) }
 
             mockMvc.perform(
