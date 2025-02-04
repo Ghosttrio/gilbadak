@@ -12,4 +12,6 @@ interface ClubUserRepository : JpaRepository<ClubUserEntity, Long> {
     fun findByUserIdAndClubId(userId: Long, clubId: Long): Optional<ClubUserEntity>
 
     fun findByUserIdAndState(userId: Long, state: ClubJoinState): Optional<ClubUserEntity>
+
+    fun deleteByClubIdAndUserId(clubId: Long, userId: Long)
 }
