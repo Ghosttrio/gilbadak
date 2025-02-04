@@ -11,7 +11,9 @@ enum class ErrorCode(
     CLUB_PRESIDENT_DUPLICATED(HttpStatus.BAD_REQUEST, "유저는 하나의 동아리만 생성할 수 있습니다."),
     CLUB_NAME_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 동아리 이름입니다."),
     CLUB_REJECTED(HttpStatus.BAD_REQUEST, "이미 가입이 거절된 유저입니다."),
-    CLUB_NOT_FOUNT(HttpStatus.NOT_FOUND, "해당 동아리를 찾을 수 없습니다.")
+    CLUB_NOT_FOUNT(HttpStatus.NOT_FOUND, "해당 동아리를 찾을 수 없습니다."),
+    CLUB_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "이미 가입한 동아리입니다.")
+
     ;
 
 }

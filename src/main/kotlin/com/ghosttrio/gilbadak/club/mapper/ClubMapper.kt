@@ -28,4 +28,12 @@ class ClubMapper {
             state = clubUserDomain.state
         )
     }
+
+    fun toDomain(clubUserEntity: ClubUserEntity): ClubUserDomain {
+        return ClubUserDomain(
+            userId = clubUserEntity.userId,
+            clubId = clubUserEntity.clubId,
+            state = clubUserEntity.state
+        )
+    }
 }

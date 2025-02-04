@@ -1,11 +1,14 @@
 package com.ghosttrio.gilbadak.club.service
 
 import com.ghosttrio.gilbadak.club.entity.club.ClubEntity
+import com.ghosttrio.gilbadak.club.entity.club.ClubJoinState
 import com.ghosttrio.gilbadak.club.entity.club.ClubType
+import com.ghosttrio.gilbadak.club.entity.club.ClubUserDomain
 import com.ghosttrio.gilbadak.club.repository.ClubPersistenceAdapter
 import com.ghosttrio.gilbadak.club.repository.ClubRepository
 import com.ghosttrio.gilbadak.club.repository.ClubUserPersistenceAdapter
 import com.ghosttrio.gilbadak.club.repository.ClubUserRepository
+import com.ghosttrio.gilbadak.club.service.model.request.CreateClubJoinServiceRequest
 import com.ghosttrio.gilbadak.club.service.model.request.CreateClubServiceRequest
 import com.ghosttrio.gilbadak.user.domain.UserStatus
 import com.ghosttrio.gilbadak.user.infrastructure.UserEntity
@@ -23,13 +26,11 @@ class CreateClubServiceTest : DescribeSpec({
     val clubUserPersistenceAdapter = mockk<ClubUserPersistenceAdapter>()
     val clubRepository = mockk<ClubRepository>()
     val userRepository = mockk<UserRepository>()
-    val clubUserRepository = mockk<ClubUserRepository>()
     val createClubService = CreateClubService(
         clubPersistenceAdapter,
         clubUserPersistenceAdapter,
         clubRepository,
-        userRepository,
-        clubUserRepository
+        userRepository
     )
 
     describe("동아리 생성 서비스 테스트") {
@@ -83,11 +84,50 @@ class CreateClubServiceTest : DescribeSpec({
                 createClubService.createClub(request)
             }.message shouldBe "중복된 동아리 이름입니다."
         }
-    }
 
-    describe("동아리 가입 신청 테스트") {
         it("동아리 가입 신청이 성공해야 한다") {
+            every { clubUserPersistenceAdapter.findByUserIdAndClubId(any(), any()) } returns Optional.empty()
+            every { clubUserPersistenceAdapter.findByUserIdAndJoinState(any()) } returns Optional.empty()
+            every { clubRepository.findById(any()) } returns Optional.empty()
+            justRun { clubUserPersistenceAdapter.save(any()) }
+            val joinServiceRequest = CreateClubJoinServiceRequest(1L, 2L)
 
+            createClubService.createClubJoinRequest(joinServiceRequest)
+
+            verify { clubUserPersistenceAdapter.save(any()) }
+        }
+
+        it("동아리 가입 신청시 이미 해당 유저가 동아리에 가입했다면 에러가 발생한다.") {
+            val joinServiceRequest = CreateClubJoinServiceRequest(1L, 2L)
+            val clubUserDomain = ClubUserDomain(1L, 2L, ClubJoinState.APPROVAL)
+            every { clubUserPersistenceAdapter.findByUserIdAndClubId(any(), any()) } returns Optional.of(clubUserDomain)
+
+            shouldThrow<GilbadakException> {
+                createClubService.createClubJoinRequest(joinServiceRequest)
+            }.message shouldBe "이미 가입한 동아리입니다."
+        }
+
+        it("동아리 가입 신청시 이미 해당 유저가 가입 거절 상태라면 에러가 발생한다.") {
+            val clubUserDomain = ClubUserDomain(1L, 2L, ClubJoinState.APPROVAL)
+            every { clubUserPersistenceAdapter.findByUserIdAndClubId(any(), any()) } returns Optional.empty()
+            every { clubUserPersistenceAdapter.findByUserIdAndJoinState(any()) } returns Optional.of(clubUserDomain)
+            val joinServiceRequest = CreateClubJoinServiceRequest(1L, 2L)
+
+            shouldThrow<GilbadakException> {
+                createClubService.createClubJoinRequest(joinServiceRequest)
+            }.message shouldBe "이미 가입이 거절된 유저입니다."
+        }
+
+        it("동아리 가입 신청시 해당 동아리 이름이 중복이라면 에러가 발생한다.") {
+            every { clubUserPersistenceAdapter.findByUserIdAndClubId(any(), any()) } returns Optional.empty()
+            every { clubUserPersistenceAdapter.findByUserIdAndJoinState(any()) } returns Optional.empty()
+            every { clubRepository.findById(any()) } returns Optional.of(clubEntity)
+            val joinServiceRequest = CreateClubJoinServiceRequest(1L, 2L)
+
+            shouldThrow<GilbadakException> {
+                createClubService.createClubJoinRequest(joinServiceRequest)
+            }.message shouldBe "중복된 동아리 이름입니다."
         }
     }
+
 })
