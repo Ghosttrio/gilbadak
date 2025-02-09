@@ -1,27 +1,28 @@
 package com.ghosttrio.gilbadak.club.service
 
 import com.ghosttrio.gilbadak.club.entity.club.ClubDomain
-import com.ghosttrio.gilbadak.club.entity.club.ClubInformation
-import com.ghosttrio.gilbadak.club.entity.club.ClubJoinRequest
+import com.ghosttrio.gilbadak.club.entity.club.ClubJoinResponse
+import com.ghosttrio.gilbadak.club.entity.club.ClubUserDomain
+import com.ghosttrio.gilbadak.club.repository.persistence.ClubPersistenceAdapter
+import com.ghosttrio.gilbadak.club.repository.persistence.ClubUserPersistenceAdapter
 import org.springframework.stereotype.Service
 
 @Service
-class LoadClubService {
+class LoadClubService(
+    private val clubPersistenceAdapter: ClubPersistenceAdapter,
+    private val clubUserPersistenceAdapter: ClubUserPersistenceAdapter
+) {
 
     fun loadAllClubs(): List<ClubDomain> {
-        return listOf()
+        return clubPersistenceAdapter.findAll()
     }
 
-    fun loadClub(): ClubDomain {
-        return ClubDomain()
+    fun loadClub(clubId: Long): ClubDomain {
+        return clubPersistenceAdapter.findById(clubId)
     }
 
-    fun loadClubSecretInformation(clubId: Long, userId: Long): ClubInformation {
-        return ClubInformation()
-    }
-
-    fun loadAllClubJoinRequests(clubId: Long): List<ClubJoinRequest> {
-        return listOf()
+    fun loadAllClubJoinRequests(clubId: Long): List<ClubUserDomain> {
+        return clubUserPersistenceAdapter.findAllByClubId(clubId)
     }
 
 }
