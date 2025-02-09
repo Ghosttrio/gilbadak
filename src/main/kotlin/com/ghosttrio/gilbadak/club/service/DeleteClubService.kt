@@ -1,7 +1,7 @@
 package com.ghosttrio.gilbadak.club.service
 
-import com.ghosttrio.gilbadak.club.repository.ClubRepository
-import com.ghosttrio.gilbadak.club.repository.ClubUserRepository
+import com.ghosttrio.gilbadak.club.repository.persistence.repository.ClubRepository
+import com.ghosttrio.gilbadak.club.repository.persistence.repository.ClubUserRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

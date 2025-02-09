@@ -36,4 +36,23 @@ class ClubMapper {
             state = clubUserEntity.state
         )
     }
+
+    object Mapper {
+        fun ClubEntity.toClubUserDomain(): ClubDomain {
+            return ClubDomain(
+                name = this.name,
+                location = this.location,
+                type = this.type,
+                description = this.description,
+                presidentUserId = this.presentUserId,
+            )
+        }
+
+        fun List<ClubEntity>.toClubUserDomainList(): List<ClubDomain> {
+            return this.map { it.toClubUserDomain() }
+        }
+
+    }
+
+
 }

@@ -2,10 +2,9 @@ package com.ghosttrio.gilbadak.club.service
 
 import com.ghosttrio.gilbadak.club.entity.club.ClubDomain
 import com.ghosttrio.gilbadak.club.entity.club.ClubUserDomain
-import com.ghosttrio.gilbadak.club.repository.ClubPersistenceAdapter
-import com.ghosttrio.gilbadak.club.repository.ClubRepository
-import com.ghosttrio.gilbadak.club.repository.ClubUserPersistenceAdapter
-import com.ghosttrio.gilbadak.club.repository.ClubUserRepository
+import com.ghosttrio.gilbadak.club.repository.persistence.ClubPersistenceAdapter
+import com.ghosttrio.gilbadak.club.repository.persistence.repository.ClubRepository
+import com.ghosttrio.gilbadak.club.repository.persistence.ClubUserPersistenceAdapter
 import com.ghosttrio.gilbadak.club.service.model.request.CreateClubJoinServiceRequest
 import com.ghosttrio.gilbadak.club.service.model.request.CreateClubServiceRequest
 import com.ghosttrio.gilbadak.user.infrastructure.UserRepository

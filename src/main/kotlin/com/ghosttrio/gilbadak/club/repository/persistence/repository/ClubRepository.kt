@@ -1,4 +1,4 @@
-package com.ghosttrio.gilbadak.club.repository
+package com.ghosttrio.gilbadak.club.repository.persistence.repository
 
 import com.ghosttrio.gilbadak.club.entity.club.ClubEntity
 import org.springframework.data.jpa.repository.JpaRepository

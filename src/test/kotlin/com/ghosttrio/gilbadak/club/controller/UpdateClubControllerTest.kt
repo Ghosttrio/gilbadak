@@ -33,7 +33,7 @@ class UpdateClubControllerTest : DescribeSpec({
                 .andExpect(status().isOk)
         }
         it ("동아리 정보 수정 요청이 성공해야 한다.") {
-            val request = UpdateClubInformationRequest("name", "description")
+            val request = UpdateClubInformationRequest(1L, "name", "description")
             justRun { updateClubService.updateClubInformation(request.convert()) }
             mockMvc.perform(patch("/api/v1/clubs")
                 .contentType(MediaType.APPLICATION_JSON)

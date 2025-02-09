@@ -1,9 +1,6 @@
 package com.ghosttrio.gilbadak.club.controller
 
-import com.ghosttrio.gilbadak.club.entity.club.ClubDomain
-import com.ghosttrio.gilbadak.club.entity.club.ClubInformation
-import com.ghosttrio.gilbadak.club.entity.club.ClubJoinRequest
-import com.ghosttrio.gilbadak.club.entity.club.ClubType
+import com.ghosttrio.gilbadak.club.entity.club.*
 import com.ghosttrio.gilbadak.club.service.LoadClubService
 import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.every
@@ -32,22 +29,13 @@ class LoadClubControllerTest : DescribeSpec({
         it("동아리 상세 정보 조회가 성공해야 한다") {
             val club = ClubDomain("", "", ClubType.ART, "", 1L)
 
-            every { loadClubService.loadClub() } returns club
+            every { loadClubService.loadClub(1L) } returns club
             mockMvc.perform(get("/api/v1/clubs/{clubId}", 1L))
                 .andExpect(status().isOk)
         }
 
-        it("동아리 비밀 정보 조회가 성공해야 한다") {
-            val clubInformation = ClubInformation()
-            val clubId = 1L
-            val userId = 1L
-            every { loadClubService.loadClubSecretInformation(clubId, userId) } returns clubInformation
-            mockMvc.perform(get("/api/v1/clubs/{clubId}/users/{userId}", clubId, userId))
-                .andExpect(status().isOk)
-        }
-
         it("동아리 가입 신청 목록 조회가 성공해야 한다") {
-            val joinRequests = listOf(ClubJoinRequest())
+            val joinRequests = listOf(ClubUserDomain(1L, 1L, ClubJoinState.PENDING))
             val clubId = 1L
             every { loadClubService.loadAllClubJoinRequests(clubId) } returns joinRequests
             mockMvc.perform(get("/api/v1/clubs/{clubId}/join", clubId))

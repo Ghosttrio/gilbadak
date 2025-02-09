@@ -1,9 +1,8 @@
 package com.ghosttrio.gilbadak.club.service
 
-import com.ghosttrio.gilbadak.club.repository.ClubRepository
-import com.ghosttrio.gilbadak.club.repository.ClubUserRepository
+import com.ghosttrio.gilbadak.club.repository.persistence.repository.ClubRepository
+import com.ghosttrio.gilbadak.club.repository.persistence.repository.ClubUserRepository
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.shouldBe
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify

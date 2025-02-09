@@ -2,10 +2,10 @@ package com.ghosttrio.gilbadak.club.entity.club
 
 
 class ClubDomain(
-    val name: String,
+    var name: String,
     val location: String,
     val type: ClubType,
-    val description: String,
+    var description: String,
     val presidentUserId: Long
 ) {
     companion object {
@@ -20,4 +20,9 @@ class ClubDomain(
         }
     }
 
+    fun updateClubInformation(name: String, description: String) : ClubDomain{
+        this.name = name
+        this.description = description
+        return this
+    }
 }
