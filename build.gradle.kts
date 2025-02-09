@@ -24,6 +24,7 @@ val queryDslVersion: String by extra
 dependencies {
 	implementation("io.springfox:springfox-swagger-ui:3.0.0")
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
+	implementation("io.github.microutils:kotlin-logging:3.0.5")
 
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -32,12 +33,14 @@ dependencies {
 	implementation("org.projectlombok:lombok")
 
 	implementation("org.springframework.boot:spring-boot-starter-graphql")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	testImplementation("org.springframework.graphql:spring-graphql-test")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 
 	testImplementation("org.springframework:spring-webflux")
+	testImplementation("org.springframework.security:spring-security-test")
 	runtimeOnly("org.postgresql:postgresql")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
