@@ -20,3 +20,8 @@ spring:
     graphiql:
       enabled: true
     path: /graphql
+
+jwt:
+  secret: 6efca431b36b5d1ad7b70011aa61736ee5f5912d17b750810fc9ac2248ed0d675add3427295172a65b6ce129fe0a610c05eedf6ff5d4e0b52999d27d93fdfc53
+  access-token-expiration-time: 1800000 # 30분
+  refresh-token-expiration-time: 604800000 # 1주일

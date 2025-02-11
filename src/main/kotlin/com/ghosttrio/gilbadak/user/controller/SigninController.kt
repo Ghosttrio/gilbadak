@@ -1,4 +1,4 @@
-package com.ghosttrio.gilbadak.auth.controller
+package com.ghosttrio.gilbadak.user.controller
 
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping

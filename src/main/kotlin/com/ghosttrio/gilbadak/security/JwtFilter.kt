@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import mu.KotlinLogging
+import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
@@ -31,7 +32,10 @@ import org.springframework.web.filter.OncePerRequestFilter
  *
  */
 
-class JwtFilter : OncePerRequestFilter() {
+class JwtFilter(
+    private val jwtResolver: JwtResolver,
+    private val jwtValidator: JwtValidator
+) : OncePerRequestFilter() {
 
     private val log = KotlinLogging.logger {}
 
@@ -41,10 +45,9 @@ class JwtFilter : OncePerRequestFilter() {
         filterChain: FilterChain
     ) {
         log.info { "JWT 필터 시작" }
-        val accessToken = request.getHeader("Authorization")
-        if (StringUtils.hasText(accessToken)) {
-            println(accessToken)
-            log.info { "JWT 토큰 있음" }
+        val accessToken = jwtResolver.extractingToken(request.getHeader(AUTHORIZATION))
+
+        if (StringUtils.hasText(accessToken) && jwtValidator.validateAccessToken(accessToken)) {
             val authorities: Collection<GrantedAuthority> = listOf()
             val authentication: Authentication = UsernamePasswordAuthenticationToken(Object(), Object(), authorities)
             SecurityContextHolder.getContext().authentication = authentication

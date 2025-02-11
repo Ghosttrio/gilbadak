@@ -1,7 +1,7 @@
-package com.ghosttrio.gilbadak.auth.controller
+package com.ghosttrio.gilbadak.user.controller
 
-import com.ghosttrio.gilbadak.auth.controller.model.request.SignupRequest
-import com.ghosttrio.gilbadak.auth.service.AuthService
+import com.ghosttrio.gilbadak.user.controller.model.request.SignupRequest
+import com.ghosttrio.gilbadak.user.service.AuthService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
