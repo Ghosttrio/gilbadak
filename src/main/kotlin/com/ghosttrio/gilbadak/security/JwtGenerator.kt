@@ -1,5 +1,6 @@
 package com.ghosttrio.gilbadak.security
 
+import com.ghosttrio.gilbadak.user.domain.UserRole
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
@@ -8,33 +9,47 @@ import java.security.Key
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.HashMap
 
 @Component
-class JwtGenerator {
+class JwtGenerator(
+    private val jwtProperties: JwtProperties
+) {
 
-    fun createToken() {
-        val secret = "123456abcdefg"
-        val userId = 1L // 추후 수정
+    fun createToken(userId: Long?, email: String, role: UserRole) : JwtToken{
+        val key = createKey()
         val issuedAt = Date()
-        val secretKeyBytes = Decoders.BASE64.decode(secret)
-        val key: Key = Keys.hmacShaKeyFor(secretKeyBytes)
+        val expiration = createExpiration()
+        val claims = createClaims(email, role)
 
-        val accessTokenTime = 30 * 60 * 1000L // 30분
-        val claims: MutableMap<String, Any?> = HashMap()
-
-        val nowTime = Timestamp.valueOf(LocalDateTime.now()).time
-        val expiration = Date(nowTime + accessTokenTime)
-
-        claims["nickname"] = "nickname"
-        claims["email"] = "email"
-
-        Jwts.builder()
+        val accessToken = Jwts.builder()
             .signWith(key) // 서명 키
             .setExpiration(expiration) // 만료일
             .setIssuedAt(issuedAt) // 토큰 생성일
             .setSubject(userId.toString()) // 보통 사용자 id
             .setClaims(claims) // 사용자 정의 데이터
             .compact()
+
+        // todo refresh token 생성 구현
+        return JwtToken(accessToken, accessToken, expiration)
     }
+
+    private fun createKey(): Key {
+        val secret = jwtProperties.secret
+        val secretKeyBytes = Decoders.BASE64.decode(secret)
+        return Keys.hmacShaKeyFor(secretKeyBytes)
+    }
+
+    private fun createExpiration(): Date {
+        val accessTokenTime = jwtProperties.accessTokenExpirationTime
+        val nowTime = Timestamp.valueOf(LocalDateTime.now()).time
+        return Date(nowTime + accessTokenTime)
+    }
+
+    private fun createClaims(email: String, role: UserRole): MutableMap<String, Any?> =
+        mutableMapOf("email" to email, "role" to role)
+
+    fun createAuthentication() {
+
+    }
+
 }

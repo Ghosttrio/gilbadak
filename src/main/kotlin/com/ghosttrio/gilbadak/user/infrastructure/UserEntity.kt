@@ -1,5 +1,6 @@
 package com.ghosttrio.gilbadak.user.infrastructure
 
+import com.ghosttrio.gilbadak.user.domain.UserRole
 import com.ghosttrio.gilbadak.user.domain.UserStatus
 import com.ghosttrio.gilbadak.util.BaseTimeEntity
 import jakarta.persistence.*
@@ -13,7 +14,9 @@ class UserEntity(
     val email: String,
     var nickname: String,
     @Enumerated(EnumType.STRING)
-    var status: UserStatus
+    var status: UserStatus,
+    @Enumerated(EnumType.STRING)
+    var role: UserRole
 ) : BaseTimeEntity() {
 
 

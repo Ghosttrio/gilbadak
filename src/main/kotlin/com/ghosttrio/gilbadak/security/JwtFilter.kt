@@ -7,9 +7,7 @@ import mu.KotlinLogging
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
 
 /**
@@ -47,13 +45,18 @@ class JwtFilter(
         log.info { "JWT 필터 시작" }
         val accessToken = jwtResolver.extractingToken(request.getHeader(AUTHORIZATION))
 
-        if (StringUtils.hasText(accessToken) && jwtValidator.validateAccessToken(accessToken)) {
-            val authorities: Collection<GrantedAuthority> = listOf()
-            val authentication: Authentication = UsernamePasswordAuthenticationToken(Object(), Object(), authorities)
-            SecurityContextHolder.getContext().authentication = authentication
-        } else {
-            log.info { "JWT 토큰이 없습니다." }
-        }
+        accessToken.takeIf { it.isValidAccessToken() }
+            ?.let {
+                val userId = jwtResolver.extractingUserId(it)
+                val authentication: Authentication = UsernamePasswordAuthenticationToken(Any(), Any(), emptyList())
+                SecurityContextHolder.getContext().authentication = authentication
+            } ?: log.info { "JWT 토큰이 없습니다." }
+
         filterChain.doFilter(request, response)
     }
+
+    private fun String?.isValidAccessToken(): Boolean =
+        this?.takeIf { it.isNotBlank() }?.let { jwtValidator.validateAccessToken(it) } == true
+
+
 }
