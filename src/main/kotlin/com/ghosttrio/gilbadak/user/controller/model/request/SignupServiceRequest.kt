@@ -1,4 +1,4 @@
-package com.ghosttrio.gilbadak.auth.controller.model.request
+package com.ghosttrio.gilbadak.user.controller.model.request
 
 data class SignupServiceRequest(
     val email: String,

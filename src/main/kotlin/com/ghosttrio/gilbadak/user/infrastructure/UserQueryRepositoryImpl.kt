@@ -12,4 +12,10 @@ class UserQueryRepositoryImpl(
             .where(userEntity.nickname.eq(nickname))
             .fetchOne()
     }
+
+    override fun findByEmail(email: String): UserEntity? {
+        return query.selectFrom(userEntity)
+            .where(userEntity.email.eq(email))
+            .fetchOne()
+    }
 }

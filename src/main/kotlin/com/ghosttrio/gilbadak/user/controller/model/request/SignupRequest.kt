@@ -1,4 +1,4 @@
-package com.ghosttrio.gilbadak.auth.controller.model.request
+package com.ghosttrio.gilbadak.user.controller.model.request
 
 import com.ghosttrio.gilbadak.util.ServiceRequestConverter
 

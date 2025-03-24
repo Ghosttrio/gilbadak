@@ -1,7 +1,6 @@
 package com.ghosttrio.gilbadak.club.controller
 
 import com.ghosttrio.gilbadak.club.entity.club.ClubDomain
-import com.ghosttrio.gilbadak.club.entity.club.ClubJoinResponse
 import com.ghosttrio.gilbadak.club.entity.club.ClubUserDomain
 import com.ghosttrio.gilbadak.club.service.LoadClubService
 import org.springframework.web.bind.annotation.GetMapping
